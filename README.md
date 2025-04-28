@@ -10,6 +10,7 @@ Cette API permet la gestion comptable avec un journal des écritures et la gén�
 - Génération d'une balance comptable au format Excel
 - Sécurisation avec JWT (Laravel Sanctum)
 - Documentation API avec Swagger
+- Interface utilisateur React
 
 ## Installation
 
@@ -18,6 +19,7 @@ Cette API permet la gestion comptable avec un journal des écritures et la gén�
 - PHP 8.2 ou supérieur
 - Composer
 - Base de données (MySQL, PostgreSQL ou SQLite)
+- Node.js et npm (pour le frontend)
 
 ### Étapes d'installation
 
@@ -65,6 +67,13 @@ mysql -u root -p comptabilite < database/data.sql
 8. Lancer le serveur de développement :
 ```
 php artisan serve
+```
+
+9. Installation et démarrage du frontend React :
+```
+cd comptable-frontend
+npm install
+npm start
 ```
 
 ## Utilisation de l'API
@@ -184,6 +193,18 @@ curl -X GET http://127.0.0.1:8000/api/export-balance \
 ## Exemple de fichier Excel généré
 
 Un exemple de fichier Excel généré est disponible dans le dossier `examples/balance_comptable.xlsx`.
+
+## Interface utilisateur React
+
+L'application inclut une interface utilisateur React qui permet de :
+
+- Se connecter avec différents rôles d'utilisateurs
+- Gérer les comptes comptables
+- Enregistrer des transactions
+- Consulter le journal comptable
+- Exporter la balance comptable
+
+Pour accéder à l'interface, lancez le frontend React et accédez à http://localhost:3000.
 
 ## Tests
 
