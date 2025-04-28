@@ -5,6 +5,33 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * @OA\Schema(
+ *     schema="Transaction",
+ *     title="Transaction",
+ *     description="Modèle de transaction comptable",
+ *     @OA\Property(property="id", type="integer", format="int64", example=1),
+ *     @OA\Property(property="date", type="string", format="date", example="2023-01-15"),
+ *     @OA\Property(property="description", type="string", example="Paiement facture client"),
+ *     @OA\Property(property="compte_debit_id", type="integer", format="int64", example=1),
+ *     @OA\Property(property="compte_credit_id", type="integer", format="int64", example=3),
+ *     @OA\Property(property="montant", type="number", format="float", example=1500.00),
+ *     @OA\Property(property="created_at", type="string", format="date-time"),
+ *     @OA\Property(property="updated_at", type="string", format="date-time"),
+ *     @OA\Property(
+ *         property="compteDebit",
+ *         ref="#/components/schemas/Compte"
+ *     ),
+ *     @OA\Property(
+ *         property="compteCredit",
+ *         ref="#/components/schemas/Compte"
+ *     ),
+ *     @OA\Property(
+ *         property="entreeJournal",
+ *         ref="#/components/schemas/EntreeJournal"
+ *     )
+ * )
+ */
 class Transaction extends Model
 {
     use HasFactory;

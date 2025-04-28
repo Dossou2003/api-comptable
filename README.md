@@ -97,7 +97,7 @@ Authorization: Bearer <token>
 
 #### Transactions
 - GET /api/transactions - Liste des transactions
-- POST /api/transactions - Enregistrer une transaction
+- POST /api/transactions - Enregistrer une transaction (réservé aux comptables)
 - GET /api/transactions/{id} - Détails d'une transaction
 
 #### Journal comptable
@@ -105,6 +105,7 @@ Authorization: Bearer <token>
 
 #### Balance comptable
 - GET /api/export-balance - Générer un fichier Excel avec la balance comptable
+- GET /api/export-balance/csv - Générer un fichier CSV avec la balance comptable
 
 ### Documentation API
 
@@ -113,14 +114,84 @@ La documentation complète de l'API est disponible à l'adresse :
 /api/documentation
 ```
 
+## Gestion des rôles
+
+L'API implémente un système de rôles pour contrôler l'accès aux fonctionnalités :
+
+- **Administrateur** : Accès complet à toutes les fonctionnalités
+- **Comptable** : Peut créer des transactions, mais ne peut pas supprimer de comptes
+- **Utilisateur** : Peut consulter les données, mais ne peut pas les modifier
+
 ## Utilisateurs de test
 
 - Administrateur : admin@example.com / password
 - Comptable : comptable@example.com / password
 
+## Exemples d'utilisation
+
+### Authentification
+
+```bash
+curl -X POST http://127.0.0.1:8000/api/login \
+  -H "Content-Type: application/json" \
+  -d '{"email": "admin@example.com", "password": "password"}'
+```
+
+### Lister les comptes
+
+```bash
+curl -X GET http://127.0.0.1:8000/api/comptes \
+  -H "Authorization: Bearer <token>"
+```
+
+### Créer un compte
+
+```bash
+curl -X POST http://127.0.0.1:8000/api/comptes \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer <token>" \
+  -d '{
+    "nom": "Banque XYZ",
+    "code": "512200",
+    "type": "actif",
+    "solde": 0
+  }'
+```
+
+### Créer une transaction
+
+```bash
+curl -X POST http://127.0.0.1:8000/api/transactions \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer <token>" \
+  -d '{
+    "date": "2023-05-15",
+    "description": "Paiement facture client",
+    "compte_debit_id": 1,
+    "compte_credit_id": 3,
+    "montant": 500
+  }'
+```
+
+### Exporter la balance comptable
+
+```bash
+curl -X GET http://127.0.0.1:8000/api/export-balance \
+  -H "Authorization: Bearer <token>" \
+  -o balance.html
+```
+
 ## Exemple de fichier Excel généré
 
 Un exemple de fichier Excel généré est disponible dans le dossier `examples/balance_comptable.xlsx`.
+
+## Tests
+
+Pour exécuter les tests unitaires et d'intégration :
+
+```bash
+php artisan test
+```
 
 ## Licence
 
